@@ -79,7 +79,7 @@ namespace ZlizEQMap
 			LegendFontSize = 10;
 		}
 
-		public static void LoadSettings()
+		public static bool LoadSettings()
 		{
 			using (FileStream fs = File.OpenRead(Paths.SettingsFilePath))
 			{
@@ -89,6 +89,9 @@ namespace ZlizEQMap
 
 					while ((line = tr.ReadLine()) != null)
 					{
+						if (line.StartsWith("\0"))
+							return false;
+
 						string key = line.Split('=')[0];
 						string value = line.Split('=')[1];
 
@@ -141,8 +144,10 @@ namespace ZlizEQMap
 
 			if (LegendFontSize == 0)
 				LegendFontSize = 10;
+
+			return true;
 		}
-		
+
 		public static void SaveSettings()
 		{
 			using (FileStream fs = File.Create(Paths.SettingsFilePath))

@@ -214,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
+	<EmbeddedResource Include="Images\background-embedded.jpg" />
     <Content Include="ZoneData\01Antonica\arena1.txt" />
     <Content Include="ZoneData\01Antonica\befallen1.txt" />
     <Content Include="ZoneData\01Antonica\befallen2.txt" />
@@ -407,7 +408,9 @@
     <Content Include="ZoneData\ZoneConnections.txt" />
     <Content Include="ZoneData\ZoneData-The Al%27Kabor Project.txt" />
     <Content Include="ZoneData\ZoneData-Project1999.txt" />
-    <EmbeddedResource Include="Images\eqatlasbg.jpg" />
+    <Content Include="background.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Images\wufist_14.ico" />
   </ItemGroup>
   <ItemGroup>

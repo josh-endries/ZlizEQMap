@@ -35,28 +35,62 @@ namespace ZlizEQMap
 		DateTime lastRecordedLocationDateTime = DateTime.Now;
 		Dictionary<PictureBox, ZoneData> subMapPictureBoxes = new Dictionary<PictureBox, ZoneData>();
 		FileSystemWatcher watcher;
-        Boolean forceLogReselection = false;
-        int flowSubMapssubMapsTotalHeight = 1;
+		Boolean forceLogReselection = false;
+		int flowSubMapssubMapsTotalHeight = 1;
 
 		public ZlizEQMapForm()
 		{
 			InitializeComponent();
+			SetBackgroundImage();
 			SetControlProperties();
 
-			if (HandleSettings())
+			try
 			{
-				string logFileDirectory = GetLogFileDirectory();
-
-				if (!Directory.Exists(logFileDirectory))
+				if (HandleSettings())
 				{
-					MessageBox.Show(String.Format("Log file directory '{0}' does not exist. Ensure the log file directory exists at this location.", logFileDirectory), "ZlizEQMap", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					Environment.Exit(1);
-				}
+					string logFileDirectory = GetLogFileDirectory();
 
-				Initialize();
+					if (!Directory.Exists(logFileDirectory))
+					{
+						MessageBox.Show(String.Format("Log file directory '{0}' does not exist. Ensure the log file directory exists at this location.", logFileDirectory), "ZlizEQMap", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						Environment.Exit(1);
+					}
+
+					Initialize();
+				}
+				else
+					Environment.Exit(0);
 			}
-			else
-				Environment.Exit(0);
+			catch (Exception ex)
+			{
+				MessageBox.Show(String.Format(@"A general error occurred while running ZlizEQMap.
+
+Please take a screenshot or copy/paste the error info below and send an email to zlizeq@almx.dk for support.
+
+{0}
+
+{1}
+
+{2}", ex.Message, ex.StackTrace, ex.InnerException?.Message), "ZlizEQMap", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+				throw;
+			}
+		}
+
+		private void SetBackgroundImage()
+		{
+			Image bg = null;
+
+			try
+			{
+				bg = Image.FromFile("background.jpg");
+			}
+			catch (Exception)
+			{
+			}
+
+			if (bg != null)
+				this.BackgroundImage = bg;
 		}
 
 		private bool HandleSettings()
@@ -68,7 +102,8 @@ namespace ZlizEQMap
 				return HandleFirstRun(true);
 			else
 			{
-				Settings.LoadSettings();
+				if (!Settings.LoadSettings())
+					return HandleFirstRun(true);
 
 				if (!Directory.Exists(Settings.GetEQDirectoryPath()))
 					return HandleFirstRun(false);
@@ -127,25 +162,25 @@ namespace ZlizEQMap
 			return logFileDirectory;
 		}
 
-        void watcher_Changed(object sender, FileSystemEventArgs e)
-        {
-            // Prevent spam from the FileSystemWatcher - a character change more than every 20 seconds is highly unlikely
-            if (DateTime.Now > lastCharacterChange.AddSeconds(5) || forceLogReselection)
-            {
-                if ( parser == null 
-                    || e.FullPath != parser.LogFilePath
-                    )
+		void watcher_Changed(object sender, FileSystemEventArgs e)
+		{
+			// Prevent spam from the FileSystemWatcher - a character change more than every 20 seconds is highly unlikely
+			if (DateTime.Now > lastCharacterChange.AddSeconds(5) || forceLogReselection)
+			{
+				if (parser == null
+					|| e.FullPath != parser.LogFilePath
+					)
 				{
 					parser = new LogFileParser(e.FullPath);
 					SetFormTitle(currentZoneData.FullName);
 					timer1.Enabled = true;
 					lastCharacterChange = DateTime.Now;
 
-                }
+				}
 			}
 
-            forceLogReselection = false;
-        }
+			forceLogReselection = false;
+		}
 
 		private bool HandleFirstRun(bool initializeDefaultSettings)
 		{
@@ -261,11 +296,11 @@ namespace ZlizEQMap
 		private void SwitchZoneByShortName(string zoneShortName)
 		{
 			ZoneData zone = ZoneDataFactory.FetchByShortZoneName(zones, zoneShortName);
-            if (zone == null)
-                zone = ZoneDataFactory.FetchByShortZoneName(zones, "POKNOWLEDGE"); // makeit default to something if something goes wrong with the "lastZoneName" value
-            if (zone == null)//if still null
-                zone = ZoneDataFactory.FetchByShortZoneName(zones, "ecommons"); // make it default to something else for p99 people maybe?
-            SwitchZone(zone.FullName, 1);
+			if (zone == null)
+				zone = ZoneDataFactory.FetchByShortZoneName(zones, "POKNOWLEDGE"); // makeit default to something if something goes wrong with the "lastZoneName" value
+			if (zone == null)//if still null
+				zone = ZoneDataFactory.FetchByShortZoneName(zones, "ecommons"); // make it default to something else for p99 people maybe?
+			SwitchZone(zone.FullName, 1);
 		}
 
 		private void SwitchZone(string zoneName, int subMapIndex)
@@ -388,9 +423,9 @@ namespace ZlizEQMap
 					subMapPictureBoxes.Add(pb, zone);
 				}
 
-                flowSubMapssubMapsTotalHeight = i * 110;
-                ReCalcFlowSubMapsHeight();
-                flowSubMaps.Visible = true;
+				flowSubMapssubMapsTotalHeight = i * 110;
+				ReCalcFlowSubMapsHeight();
+				flowSubMaps.Visible = true;
 			}
 		}
 
@@ -559,7 +594,7 @@ namespace ZlizEQMap
 				if (height > working.Height - 100)
 					height = working.Height - 100;
 
-				this.Height = height;
+				this.Height = height + 20;
 				PositionLabels();
 			}
 		}
@@ -644,19 +679,19 @@ namespace ZlizEQMap
 				UpdatePlayerLocation(Convert.ToInt32(locx.Value), Convert.ToInt32(locy.Value));
 		}
 
-        private void ReCalcFlowSubMapsHeight()
-        {
-            //so we don't hide icons offscren if map is taller than window
-            flowSubMaps.Height = Math.Min(flowSubMapssubMapsTotalHeight, panelMain.Height); //check size of number of SubMaps vs main map height 
-            flowSubMaps.Height = Math.Min(flowSubMaps.Height, this.Height); //so we don't hide icons offscren if map is taller than window
-        }
+		private void ReCalcFlowSubMapsHeight()
+		{
+			//so we don't hide icons offscren if map is taller than window
+			flowSubMaps.Height = Math.Min(flowSubMapssubMapsTotalHeight, panelMain.Height); //check size of number of SubMaps vs main map height 
+			flowSubMaps.Height = Math.Min(flowSubMaps.Height, this.Height); //so we don't hide icons offscren if map is taller than window
+		}
 
 		private void ZlizEQMapForm_SizeChanged(object sender, EventArgs e)
 		{
 
-            ReCalcFlowSubMapsHeight();
+			ReCalcFlowSubMapsHeight();
 
-            labelLegend.MaximumSize = new Size(this.Width - 50, 1000000);
+			labelLegend.MaximumSize = new Size(this.Width - 50, 1000000);
 		}
 
 		private void linkLabelWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -745,27 +780,27 @@ namespace ZlizEQMap
 				btnSetWaypoint.Text = "Clear";
 		}
 
-        private void textBoxCharName_TextChanged(object sender, EventArgs e)
-        {
-            String charNameFilter = "";
-            String assembledLogNamefilter = "";
+		private void textBoxCharName_TextChanged(object sender, EventArgs e)
+		{
+			String charNameFilter = "";
+			String assembledLogNamefilter = "";
 
-            charNameFilter = textBoxCharName.Text;
-            if (charNameFilter == "")
-            {
-                assembledLogNamefilter = String.Format("eqlog_*.txt");
-            }
-            else
-            {
-                assembledLogNamefilter = String.Format("eqlog_{0}.txt", charNameFilter);
-            }
+			charNameFilter = textBoxCharName.Text;
+			if (charNameFilter == "")
+			{
+				assembledLogNamefilter = String.Format("eqlog_*.txt");
+			}
+			else
+			{
+				assembledLogNamefilter = String.Format("eqlog_{0}.txt", charNameFilter);
+			}
 
-            watcher.Filter = assembledLogNamefilter;
-            forceLogReselection = true;
-        }
+			watcher.Filter = assembledLogNamefilter;
+			forceLogReselection = true;
+		}
 	}
 
-    public class MapPoint
+	public class MapPoint
 	{
 		public int Y { get; set; }
 		public int X { get; set; }

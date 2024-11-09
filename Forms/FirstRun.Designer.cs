@@ -45,9 +45,9 @@
 			this.radioLogsLogs = new System.Windows.Forms.RadioButton();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label7 = new System.Windows.Forms.Label();
 			this.comboZoneData = new System.Windows.Forms.ComboBox();
 			this.label8 = new System.Windows.Forms.Label();
-			this.label7 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -97,7 +97,7 @@
 			this.label3.Size = new System.Drawing.Size(431, 13);
 			this.label3.TabIndex = 4;
 			this.label3.Text = "Click the button below to enable permanent logging in EQ (sets Log=True in eqclie" +
-    "nt.ini).";
+	"nt.ini).";
 			// 
 			// folderBrowserDialog1
 			// 
@@ -135,7 +135,7 @@
 			this.label4.Size = new System.Drawing.Size(442, 13);
 			this.label4.TabIndex = 7;
 			this.label4.Text = "Since this is your first time running the application, you must set your EverQues" +
-    "t directory.";
+	"t directory.";
 			// 
 			// labelLogStatus
 			// 
@@ -149,13 +149,12 @@
 			// 
 			// label5
 			// 
-			this.label5.AutoSize = true;
 			this.label5.Location = new System.Drawing.Point(12, 50);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(432, 13);
+			this.label5.Size = new System.Drawing.Size(442, 32);
 			this.label5.TabIndex = 7;
 			this.label5.Text = "This dialog might also be shown because the previously saved directory no longer " +
-    "exists.";
+	"exists, or because the .ini file with settings has become corrupted.";
 			// 
 			// label6
 			// 
@@ -190,8 +189,8 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Controls.Add(this.btnEnableLogging);
 			this.groupBox1.Location = new System.Drawing.Point(15, 217);
@@ -202,8 +201,8 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox2.Controls.Add(this.label7);
 			this.groupBox2.Controls.Add(this.comboZoneData);
 			this.groupBox2.Controls.Add(this.label8);
@@ -219,6 +218,18 @@
 			this.groupBox2.TabIndex = 13;
 			this.groupBox2.TabStop = false;
 			// 
+			// label7
+			//
+			this.label7.AutoSize = true;
+			this.label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.label7.ForeColor = System.Drawing.Color.DarkRed;
+			this.label7.Location = new System.Drawing.Point(12, 110);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(407, 15);
+			this.label7.TabIndex = 14;
+			this.label7.Text = "Tip: For Project1999, choose \'\\Logs directory\'. For EQMac, choose \'Root directory" +
+"\'.";
+			//
 			// comboZoneData
 			// 
 			this.comboZoneData.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -237,18 +248,6 @@
 			this.label8.Size = new System.Drawing.Size(76, 13);
 			this.label8.TabIndex = 12;
 			this.label8.Text = "Zone Dataset:";
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.label7.ForeColor = System.Drawing.Color.DarkRed;
-			this.label7.Location = new System.Drawing.Point(12, 110);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(407, 15);
-			this.label7.TabIndex = 14;
-			this.label7.Text = "Tip: For Project1999, choose \'\\Logs directory\'. For EQMac, choose \'Root directory" +
-    "\'.";
 			// 
 			// FirstRun
 			// 
