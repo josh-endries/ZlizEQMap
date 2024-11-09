@@ -15,7 +15,7 @@ namespace ZlizEQMap
 	{
 		public event EventHandler OnEQDirSettingsChanged;
 
-		private string version = "9";
+		private string version = "10";
 
 		public SettingsHelp()
 		{
