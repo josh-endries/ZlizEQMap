@@ -41,7 +41,7 @@ Displaying map overlay feature; adjustable window transparency.
 ## Requirements
 
 Microsoft Windows
-.NET Framework 4.0
+.NET Framework 4.8
 Tested on Windows 7 64-bit.
 
 ## Installation and Running
