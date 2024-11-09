@@ -7,7 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-		ZlizEQMap.vsmdi = ZlizEQMap.vsmdi
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZlizEQMap", "ZlizEQMap.csproj", "{1167AFC2-AA7C-413D-BDE0-962F327473C1}"
@@ -48,8 +47,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {80725ADB-D231-40CE-9D45-ADAF5EE6AEF4}
 		VisualSVNWorkingCopyRoot = .
+		SolutionGuid = {80725ADB-D231-40CE-9D45-ADAF5EE6AEF4}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = ZlizEQMap.vsmdi

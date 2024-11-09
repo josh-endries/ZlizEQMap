@@ -108,7 +108,7 @@ namespace ZlizEQMap
 						TotalX = Convert.ToInt32(items[2]),
 						TotalY = Convert.ToInt32(items[3]),
 						Legend = legend,
-						SubMapIndex = Int32.Parse(fileName[fileName.Length - 1].ToString()),
+						SubMapIndex = Convert.ToInt32(Regex.Match(fileName, @"\d+").Value),
 						SubMapDescription = (items.Length == 5 ? items[4] : null)
 					};
 
@@ -140,7 +140,7 @@ namespace ZlizEQMap
 
 			foreach (string path in Directory.GetFiles(Paths.ZoneDataPath, String.Format("{0}*.txt", zoneShortName), SearchOption.AllDirectories))
 			{
-				Regex regex = new Regex(String.Format(@"({0})[0-9]\.txt", zoneShortName));
+				Regex regex = new Regex(String.Format(@"({0})[0-9]+\.txt", zoneShortName));
 
 				if (regex.IsMatch(path))
 					paths.Add(path);
